@@ -56,6 +56,29 @@ namespace OpenCvClr
 		this->ImageDataPtr = IntPtr(this->ImageData);
 	}
 
+	CvImage::CvImage(IplImage *image)
+	{
+		this->Initialize();
+
+		// 入力画像の読み込み
+		this->Image = cvCreateImage(cvSize(image->width, image->height), IPL_DEPTH_8U, 3);
+		if (this->Image == NULL)
+		{
+			return;
+		}
+
+		// データコピー
+		memcpy(this->Image->imageData, image->imageData, (image->widthStep * image->height));
+
+		// サイズの取得
+		this->width = this->Image->width;
+		this->height = this->Image->height;
+
+		// Bitmap 作成用ピクセルデータ領域の確保
+		this->ImageData = new uchar[this->Image->widthStep * this->Image->height];
+		this->ImageDataPtr = IntPtr(this->ImageData);
+	}
+
 	CvImage::~CvImage()
 	{
 		if (this->Image != NULL)

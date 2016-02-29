@@ -74,4 +74,41 @@ namespace OpenCvClr
 			}
 		}
 	}
+	
+	OpenCvClr::CvImage^ CvImgProc::CvSmooth(CvImage^ inputImage)
+	{
+		// 平滑化画像
+		IplImage *smoothImage = NULL;
+		// 出力画像
+		CvImage^ retImage = nullptr;
+		
+		try
+		{
+			// 中間画像（平滑化画像）の領域確保
+			smoothImage = cvCreateImage(cvSize(inputImage->Image->width, inputImage->Image->height), IPL_DEPTH_8U, 3);
+			if (smoothImage == NULL)
+			{
+				throw gcnew Exception("平滑化画像の領域確保に失敗しました。");
+			}
+
+			// 中間画像（平滑化画像）の作成
+			cvSmooth(inputImage->Image, smoothImage, CV_GAUSSIAN, 3, 3);
+
+			// 出力画像領域の確保
+			retImage = gcnew CvImage(smoothImage);
+
+			return retImage;
+		}
+		catch (Exception^ ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			if (smoothImage != NULL)
+			{
+				cvReleaseImage(&smoothImage);
+			}
+		}
+	}
 }

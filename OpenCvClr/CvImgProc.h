@@ -23,5 +23,11 @@ namespace OpenCvClr
 		/// <param name="position">“ü—Í‰æ‘œ</param>
 		/// <param name="threshold">‚µ‚«‚¢’li0-255j</param>
 		static OpenCvClr::CvImage^ CvThreshold(CvImage^ inputImage, int threshold);
+
+		/// <summary>
+		/// •½ŠŠ‰»
+		/// </summary>
+		/// <param name="position">“ü—Í‰æ‘œ</param>
+		static OpenCvClr::CvImage^ CvSmooth(CvImage^ inputImage);
 	};
 }

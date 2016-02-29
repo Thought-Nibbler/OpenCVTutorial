@@ -62,7 +62,13 @@ namespace OpenCvClr
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="filename">入力ファイル名</param>
-		CvImage(String ^filename);
+		CvImage(String^ filename);
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="image">元画像</param>
+		CvImage(IplImage *image);
 
 		/// <summary>
 		/// デストラクタ
