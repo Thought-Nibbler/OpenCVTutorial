@@ -141,9 +141,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Penguins.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\OpenCvClr\OpenCvClr.vcxproj">
       <Project>{b13cc571-6211-4cb9-b333-69b0b83135cc}</Project>
       <Name>OpenCvClr</Name>
