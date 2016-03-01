@@ -1,34 +1,82 @@
-﻿<Window x:Class="OpenCVTutorial.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OpenCVTutorial.MainWindow"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="730" Width="1120">
+    <Window.Resources>
+        <ResourceDictionary Source="Dictionary.xaml" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
-        <TabControl x:Name="tcContents" TabStripPlacement="Left" Margin="5" Background="Gray">
-            <TabItem Header="TOP">
-            </TabItem>
+        <TabControl x:Name="tcContents" TabStripPlacement="Left" Margin="5" Background="Gray" SelectionChanged="tcContents_SelectionChanged">
+            <TabItem Header="TOP"/>
             <TabItem Header="画像ファイルの読み込み">
                 <Grid>
                     <Image x:Name="Image001" Margin="5" />
                 </Grid>
             </TabItem>
-            <TabItem Header="動画ファイルの読み込み">
-                
-            </TabItem>
-            <TabItem Header="カメラキャプチャ">
-                
-            </TabItem>
+            <TabItem Header="動画ファイルの読み込み"/>
+            <TabItem Header="カメラキャプチャ"/>
             <TabItem Header="二値化">
                 <Grid>
-                    <Image x:Name="Image004" Margin="5" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+                    <Image  Grid.Row="0" Grid.ColumnSpan="2" x:Name="Image004" Margin="5" />
+                    <Slider 
+						Grid.Row="1" 
+						Minimum="0" Maximum="255" IsSnapToTickEnabled="True"
+						Width="800"
+						Value="{Binding Threshold}"
+						VerticalAlignment="Center" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Threshold}" Style="{StaticResource LabelStringStyle}" />
                 </Grid>
             </TabItem>
             <TabItem Header="平滑化">
                 <Grid>
-                    <Image x:Name="Image005" Margin="5" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image  Grid.Row="0" Grid.ColumnSpan="9" x:Name="Image005" Margin="5" />
+                    <Label Grid.Row="1" Grid.Column="0"                     Content="平滑化の種類" Style="{StaticResource LabelStringStyle}" />
+                    <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Content="フィルタサイズ" Style="{StaticResource LabelStringStyle}" />
+                    <Label Grid.Row="1" Grid.Column="6"                     Content="シグマ値１" Style="{StaticResource LabelStringStyle}" />
+                    <Label Grid.Row="1" Grid.Column="7"                     Content="シグマ値２" Style="{StaticResource LabelStringStyle}" />
+                    <ComboBox Grid.Row="2" Margin="5" SelectedIndex="{Binding Path=SmoothProperty.SmoothType, Converter={StaticResource IntegerToCvSmoothTypeConverter}}">
+                        <System:String>CV_BLUR</System:String>
+                        <System:String>CV_BLUR_NO_SCALE</System:String>
+                        <System:String>CV_MEDIAN</System:String>
+                        <System:String>CV_GAUSSIAN</System:String>
+                        <System:String>CV_BILATERAL</System:String>
+                    </ComboBox>
+                    <TextBox Grid.Row="2" Grid.Column="2" Margin="5" Text="{Binding Path=SmoothProperty.FilterX, Converter={StaticResource StringToIntegerConverter}}" />
+                    <Label   Grid.Row="2" Grid.Column="3" Content="x"  Style="{StaticResource LabelStringStyle}" />
+                    <TextBox Grid.Row="2" Grid.Column="4" Margin="5" Text="{Binding Path=SmoothProperty.FilterY, Converter={StaticResource StringToIntegerConverter}}" />
+                    <TextBox Grid.Row="2" Grid.Column="6" Margin="5" Text="{Binding Path=SmoothProperty.Sigma1, Converter={StaticResource StringToDoubleConverter}}" />
+                    <TextBox Grid.Row="2" Grid.Column="7" Margin="5" Text="{Binding Path=SmoothProperty.Sigma2, Converter={StaticResource StringToDoubleConverter}}" />
+                    <Button  Grid.Row="2" Grid.Column="8" Margin="5" Content="更新" x:Name="btnSmoothReload" Click="btnSmoothReload_Click" />
                 </Grid>
             </TabItem>
         </TabControl>

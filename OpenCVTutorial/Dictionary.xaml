@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Class="WPFTutorial.Dictionary"
+                    xmlns:my="clr-namespace:OpenCVTutorial"
+                    >
+    <my:StringToIntegerConverter x:Key="StringToIntegerConverter" />
+    <my:StringToDoubleConverter x:Key="StringToDoubleConverter" />
+    <my:IntegerToCvSmoothTypeConverter x:Key="IntegerToCvSmoothTypeConverter" />
+    <Style TargetType="Label" x:Key="LabelStringStyle">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style TargetType="ListBox" x:Key="ListBoxStyle">
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style TargetType="Button" x:Key="ButtonStyle">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="100" />
+    </Style>
+</ResourceDictionary>

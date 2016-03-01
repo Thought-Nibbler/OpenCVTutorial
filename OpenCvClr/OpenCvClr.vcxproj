@@ -149,6 +149,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CvDefinitions.h" />
     <ClInclude Include="CvImage.h" />
     <ClInclude Include="CvImgProc.h" />
     <ClInclude Include="resource.h" />

@@ -7,7 +7,7 @@ using namespace msclr::interop;
 
 namespace OpenCvClr 
 {
-	OpenCvClr::CvImage^ CvImgProc::CvThreshold(CvImage^ inputImage, int threshold)
+	OpenCvClr::CvImage^ CvImgProc::Threshold(CvImage^ inputImage, int threshold)
 	{
 		// グレースケール画像
 		IplImage *grayImage = NULL;
@@ -75,7 +75,7 @@ namespace OpenCvClr
 		}
 	}
 	
-	OpenCvClr::CvImage^ CvImgProc::CvSmooth(CvImage^ inputImage)
+	OpenCvClr::CvImage^ CvImgProc::Smooth(CvImage^ inputImage, CvSmoothType smoothType, int filterX, int filterY, double sigma1, double sigma2)
 	{
 		// 平滑化画像
 		IplImage *smoothImage = NULL;
@@ -92,7 +92,7 @@ namespace OpenCvClr
 			}
 
 			// 中間画像（平滑化画像）の作成
-			cvSmooth(inputImage->Image, smoothImage, CV_GAUSSIAN, 3, 3);
+			cvSmooth(inputImage->Image, smoothImage, (int)smoothType, filterX, filterY, sigma1, sigma2);
 
 			// 出力画像領域の確保
 			retImage = gcnew CvImage(smoothImage);
