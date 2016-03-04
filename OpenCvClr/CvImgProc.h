@@ -24,6 +24,15 @@ namespace OpenCvClr
 		static OpenCvClr::CvImage^ Threshold(CvImage^ inputImage, int threshold);
 
 		/// <summary>
+		/// 適応型しきい値による二値画像の作成
+		/// </summary>
+		/// <param name="position">入力画像</param>
+		/// <param name="adaptiveMethod">適応メソッド（重みづけ）</param>
+		/// <param name="blockSize">ブロックサイズ</param>
+		/// <param name="param">定数（決定したしきい値から引かれる値）</param>
+		static OpenCvClr::CvImage^ AdaptiveThresdhold(CvImage^ inputImage, CvAdaptMethod adaptiveMethod, int blockSize, double param);
+
+		/// <summary>
 		/// 平滑化
 		/// </summary>
 		/// <param name="position">入力画像</param>

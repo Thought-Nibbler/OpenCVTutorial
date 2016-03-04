@@ -25,7 +25,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="50" />
+                        <RowDefinition Height="70" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -39,6 +39,35 @@
 						Value="{Binding Threshold}"
 						VerticalAlignment="Center" />
                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding Threshold}" Style="{StaticResource LabelStringStyle}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="適応型二値化">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Image  Grid.Row="0" Grid.ColumnSpan="7" x:Name="Image005" Margin="5" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="適応メソッド（重みづけ）" Style="{StaticResource LabelStringStyle}" />
+                    <Label Grid.Row="1" Grid.Column="2" Content="ブロックサイズ" Style="{StaticResource LabelStringStyle}" />
+                    <Label Grid.Row="1" Grid.Column="4" Content="定数値" Style="{StaticResource LabelStringStyle}" />
+                    <ComboBox Grid.Row="2" Margin="5" SelectedIndex="{Binding Path=AdaptiveThresholdProperty.AdaptMethod, Converter={StaticResource IntegerToCvAdaptMethodConverter}}">
+                        <System:String>均等</System:String>
+                        <System:String>Gaussian関数</System:String>
+                    </ComboBox>
+                    <TextBox Grid.Row="2" Grid.Column="2" Margin="5" Text="{Binding Path=AdaptiveThresholdProperty.BlockSize, Converter={StaticResource StringToIntegerConverter}}" />
+                    <TextBox Grid.Row="2" Grid.Column="4" Margin="5" Text="{Binding Path=AdaptiveThresholdProperty.Param, Converter={StaticResource StringToDoubleConverter}}" />
+                    <Button  Grid.Row="2" Grid.Column="6" Margin="5" Content="更新" x:Name="btnAdaptThresholdReload" Click="btnAdaptThresholdReload_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="平滑化">
@@ -59,7 +88,7 @@
                         <ColumnDefinition Width="150" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Image  Grid.Row="0" Grid.ColumnSpan="9" x:Name="Image005" Margin="5" />
+                    <Image  Grid.Row="0" Grid.ColumnSpan="9" x:Name="Image006" Margin="5" />
                     <Label Grid.Row="1" Grid.Column="0"                     Content="平滑化の種類" Style="{StaticResource LabelStringStyle}" />
                     <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Content="フィルタサイズ" Style="{StaticResource LabelStringStyle}" />
                     <Label Grid.Row="1" Grid.Column="6"                     Content="シグマ値１" Style="{StaticResource LabelStringStyle}" />

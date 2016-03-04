@@ -6,6 +6,7 @@
     <my:StringToIntegerConverter x:Key="StringToIntegerConverter" />
     <my:StringToDoubleConverter x:Key="StringToDoubleConverter" />
     <my:IntegerToCvSmoothTypeConverter x:Key="IntegerToCvSmoothTypeConverter" />
+    <my:IntegerToCvAdaptMethodConverter x:Key="IntegerToCvAdaptMethodConverter" />
     <Style TargetType="Label" x:Key="LabelStringStyle">
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="VerticalAlignment" Value="Center" />

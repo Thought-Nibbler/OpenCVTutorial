@@ -10,4 +10,10 @@ namespace OpenCvClr
 		GAUSSIAN      = CV_GAUSSIAN,
 		BILATERAL     = CV_BILATERAL
 	};
+
+	public enum class CvAdaptMethod : int
+	{
+		EQUIVALENT = CV_ADAPTIVE_THRESH_MEAN_C,
+		GAUSSIAN   = CV_ADAPTIVE_THRESH_GAUSSIAN_C
+	};
 }

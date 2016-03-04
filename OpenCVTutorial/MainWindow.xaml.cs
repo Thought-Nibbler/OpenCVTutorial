@@ -54,6 +54,34 @@ namespace OpenCVTutorial
 		private int _Threshold = 128; 
 		#endregion
 
+		#region 適応型二値化に関するプロパティ
+		/// <summary>
+		/// 適応型二値化に関するプロパティの定義
+		/// </summary>
+		public class AdaptiveThresholdPropertyClass
+		{
+			/// <summary>
+			/// 適応メソッド（重みづけ）
+			/// </summary>
+			public CvAdaptMethod AdaptMethod { get; set; }
+
+			/// <summary>
+			/// ブロックサイズ
+			/// </summary>
+			public int BlockSize { get; set; }
+
+			/// <summary>
+			/// 定数値
+			/// </summary>
+			public double Param { get; set; }
+		}
+
+		/// <summary>
+		/// 適応型二値化に関するプロパティオブジェクト
+		/// </summary>
+		public AdaptiveThresholdPropertyClass AdaptiveThresholdProperty { get; set; }
+		#endregion
+
 		#region 平滑化に関するプロパティ
 		/// <summary>
 		/// 平滑化に関するプロパティの定義
@@ -105,6 +133,13 @@ namespace OpenCVTutorial
 
 				this.DataContext = this;
 
+				#region 適応型二値化に関するプロパティの初期化
+				this.AdaptiveThresholdProperty             = new AdaptiveThresholdPropertyClass();
+				this.AdaptiveThresholdProperty.AdaptMethod = CvAdaptMethod.EQUIVALENT;
+				this.AdaptiveThresholdProperty.BlockSize   = 71;
+				this.AdaptiveThresholdProperty.Param       = 15.0;
+				#endregion
+
 				#region 平滑化に関するプロパティの初期化
 				this.SmoothProperty            = new SmoothPropertyClass();
 				this.SmoothProperty.SmoothType = CvSmoothType.GAUSSIAN;
@@ -154,7 +189,10 @@ namespace OpenCVTutorial
 					case 4:// 二値化
 						this.CreateBinaryImage();
 						break;
-					case 5:// 平滑化
+					case 5:// 適応型二値化
+						this.CreateAdaptBinaryImage();
+						return;
+					case 6:// 平滑化
 						this.CreateSmoothImage();
 						return;
 					default:
@@ -296,6 +334,75 @@ namespace OpenCVTutorial
 		} 
 		#endregion
 
+		#region [適応型二値化]タブ
+		/// <summary>
+		/// 適応型二値化
+		/// </summary>
+		private void CreateAdaptBinaryImage()
+		{
+			try
+			{
+				if (this.FileName == null)
+				{
+					this.FileName = this.SelectImageFile();
+				}
+
+				CvAdaptMethod adaptMethod = this.AdaptiveThresholdProperty.AdaptMethod;
+				int           blockSize   = this.AdaptiveThresholdProperty.BlockSize;
+				double        param       = this.AdaptiveThresholdProperty.Param;
+
+				using (CvImage orgImage = new CvImage(this.FileName))
+				using (CvImage smoothImage = CvImgProc.AdaptiveThresdhold(orgImage, adaptMethod, blockSize, param))
+				using (MemoryStream stream = new MemoryStream())
+				{
+					Bitmap bitmap = smoothImage.GetImageBmp();
+
+					if (bitmap == null)
+					{
+						MessageBox.Show("bitmap null.");
+						return;
+					}
+
+					bitmap.Save(stream, ImageFormat.Bmp);
+
+					// BitmapImageの作成（キャッシュを切る）
+					BitmapImage bmpImage = new BitmapImage();
+					bmpImage.BeginInit();
+					bmpImage.CacheOption = BitmapCacheOption.OnLoad;
+					bmpImage.CreateOptions = BitmapCreateOptions.None;
+					bmpImage.StreamSource = stream;
+					bmpImage.EndInit();
+					bmpImage.Freeze();
+
+					this.Image005.Source = bmpImage;
+
+					bmpImage = null;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		/// <summary>
+		/// [適応型二値化]タブ内の[更新]ボタンを押した時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnAdaptThresholdReload_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				this.CreateAdaptBinaryImage();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+		#endregion
+
 		#region [平滑化]タブ
 		/// <summary>
 		/// 平滑化
@@ -338,7 +445,7 @@ namespace OpenCVTutorial
 					bmpImage.EndInit();
 					bmpImage.Freeze();
 
-					this.Image005.Source = bmpImage;
+					this.Image006.Source = bmpImage;
 
 					bmpImage = null;
 				}
